@@ -1,0 +1,17 @@
+#Fri Nov 05 13:29:23 EDT 2010
+com.springsource.sts.grails.core.com.springsource.sts.grails.core.install.name=Grails135
+com.springsource.sts.grails.core.javadoc.location-grails-core-1.3.5.jar=file\:/home/victor/dev/groovy/grails-docs-1.3.5/api/
+com.springsource.sts.grails.core.javadoc.location-groovy-all-1.7.5.jar=file\:/home/victor/dev/groovy/groovy_docs/html/api/
+com.springsource.sts.grails.core.source.attachment-grails-bootstrap-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-core-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-crud-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-docs-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-gorm-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-resources-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-scripts-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-spring-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-test-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-tomcat-plugin-1.0.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.source.attachment-grails-web-1.3.5.jar=/home/victor/dev/groovy/grails/src/java
+com.springsource.sts.grails.core.use.default.install=false
+eclipse.preferences.version=1
