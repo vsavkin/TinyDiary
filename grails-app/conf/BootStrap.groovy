@@ -7,14 +7,10 @@ class BootStrap {
 	SpringSecurityService springSecurityService
 
     def init = { servletContext ->
-		if(Environment.current == Environment.DEVELOPMENT){
-			def userRole = Role.findByAuthority("ROLE_USER") ?: new Role(authority: "ROLE_USER").save()
-			def adminRole = Role.findByAuthority("ROLE_ADMIN") ?: new Role(authority: "ROLE_ADMIN").save()
-			
-			def user = new User(username: 'avix1000', password: springSecurityService.encodePassword('password'), enabled: true)
+		if(Environment.current == Environment.DEVELOPMENT){			
+			def user = new User(username: 'avix1000', password: 
+				springSecurityService.encodePassword('password'), enabled: true)
 			user.save()
-			
-			UserRole.create user, userRole
 			
 			def work = new PostPartType(name: 'work').save()
 			def home = new PostPartType(name: 'home').save()
@@ -25,7 +21,18 @@ class BootStrap {
 			
 			user.addToPosts post
 			user.save()		
+
+			user = new User(username: 'john', password:
+				springSecurityService.encodePassword('password'), enabled: true)
+			user.save()
 			
+			post = new Post()
+			post.addToParts new PostPart(type: work, text: 'Sitting at work')
+			post.addToParts new PostPart(type: home, text: 'Sitting at home')
+			
+			user.addToPosts post
+			user.save(flush: true)
+			println post.id
 		}
 	}
 	
