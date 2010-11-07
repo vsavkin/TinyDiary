@@ -1,7 +1,9 @@
 package com.savkin
 
 import com.savkin.parser.*
+import grails.plugins.springsecurity.Secured
 
+@Secured('IS_AUTHENTICATED_REMEMBERED')
 class PostController {
 	AuthService authService
 	
