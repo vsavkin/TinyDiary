@@ -5,13 +5,13 @@ import grails.test.*
 class MainControllerTests extends ControllerUnitTestCase {
 
 	void testShouldShowMainPageForAnonymous() {
-		setCurrentUser null
+		asCurrentUser null
 		makeRequest 'index'
 		assertEquals [:], redirectArgs
 	}
 	
     void testShouldRedirectToPostsControllerRegisteredUser() {
-		setCurrentUser 'user'
+		asCurrentUser 'user'
 		makeRequest 'index'
 		assertEquals 'posts', redirectArgs.controller
     }

@@ -12,7 +12,7 @@ class PostsControllerTests extends ControllerUnitTestCase {
 				assert count == 10; posts
 			}
 		}
-		setCurrentUser user
+		asCurrentUser user
 		makeRequest 'index'	
 		assertEquals user, controller.user
 		assertEquals posts, controller.posts
@@ -28,7 +28,7 @@ class PostsControllerTests extends ControllerUnitTestCase {
 				posts
 			}
 		}
-		setCurrentUser user
+		asCurrentUser user
 		makeRequest 'between', from: today, to: today + 2
 		assertEquals user, controller.user
 		assertEquals posts, controller.posts

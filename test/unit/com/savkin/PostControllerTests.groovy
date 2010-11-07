@@ -48,7 +48,7 @@ class PostControllerTests extends ControllerUnitTestCase {
 	}
 	
 	void testShouldSaveNewPost(){
-		def user = setCurrentUser(createUser())
+		def user = asCurrentUser(createUser())
 		
 		mock(PostParser){
 			parse(1..10){
@@ -81,7 +81,7 @@ class PostControllerTests extends ControllerUnitTestCase {
 	void testShouldIgnoreExistingPostPartTypes(){
 		mockDomain PostPartType, [new PostPartType(name: 'work')]		
 		
-		def user = setCurrentUser(createUser())		
+		def user = asCurrentUser(createUser())		
 		mock(PostParser){
 			parse(1..10){
 				[[type: 'work', text: 'work text'],
@@ -106,7 +106,7 @@ class PostControllerTests extends ControllerUnitTestCase {
 	}
 	
 	void testShouldUpdateExistingPost(){
-		def user = setCurrentUser(createUser())
+		def user = asCurrentUser(createUser())
 		
 		def postType = new PostPartType(name: 'work')
 		mockDomain PostPartType, [postType]

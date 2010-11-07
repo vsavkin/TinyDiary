@@ -4,7 +4,7 @@ import groovy.mock.interceptor.*
 
 
 class ControllerTestUtils {
-	def setCurrentUser(user){
+	def asCurrentUser(user){
 		def stub = new StubFor(AuthService)
 		stub.demand.isLoggedIn{user}
 		stub.demand.currentUser{user}
