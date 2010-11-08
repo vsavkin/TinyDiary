@@ -3,7 +3,7 @@
 <title>Edit Post</title>
 </head>
 <body>
-	<h1>Create Post at <g:formatDate format="yyyy-MM-dd" date="${post.dateCreated}"/></h1>
+	<h1>Create Post on <g:formatDate format="yyyy-MM-dd" date="${post.dateCreated}"/></h1>
 	
 	<g:hasErrors bean="${post}">
     	<g:renderErrors bean="${post}" as="list" />

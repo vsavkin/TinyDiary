@@ -3,10 +3,12 @@
 <title>Your Posts</title>
 </head>
 <body>
-	<h1>Post at <g:formatDate format="yyyy-MM-dd" date="${post.dateCreated}"/></h1>
+	<h1>Post on <g:formatDate format="yyyy-MM-dd" date="${post.dateCreated}"/></h1>
 		
 	<g:each in="${post.parts}" var="part">
-		<h2>${part.type}</h2>
-		<div>${part.text}</div>
+		<div class="postPart">
+			<div class="type">${part.type}</div>
+			<div class="text">${part.text}</div>
+		</div>
 	</g:each>
 </body>

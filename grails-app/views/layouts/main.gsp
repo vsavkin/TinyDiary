@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title><g:layoutTitle default="Grails" /></title>
+		<title><g:layoutTitle default="TinyDiary" /></title>
 		<link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
 		<link rel="shortcut icon"
 			href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
@@ -9,24 +9,26 @@
 	</head>
 <body>
 
-<div id="spinner" class="spinner" style="display: none;"><img
-	src="${resource(dir:'images',file:'spinner.gif')}"
-	alt="${message(code:'spinner.alt',default:'Loading...')}" /></div>
-<div id="grailsLogo"><a href="http://grails.org"><img
-	src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails"
-	border="0" /></a></div>
-	
-<div>
+<div id="logo">
+	TinyDiary
+	<div id="comment">Keep Track of Your Productive Days</div>
+</div>
+
+<div id="nav">
 	<sec:ifLoggedIn>
-		<sec:username/> <g:link controller="logout">Sign out</g:link>
+		Hello <sec:username/>! <g:link controller="logout">Sign out</g:link> 
+		<g:link controller="posts">Your Posts</g:link>
+		<g:link controller="post" action="create">Create New Post</g:link>
 	</sec:ifLoggedIn>
 	<sec:ifNotLoggedIn>
-		<g:link controller="login" action="auth">Sign in</g:link>	
-		<g:link controller="register">Create new account</g:link>	
+		<g:link controller="login" action="auth">Sign in</g:link> or 	
+		<g:link controller="registration">Create new account</g:link>	
 	</sec:ifNotLoggedIn>
 </div>
 		
-<g:layoutBody />
+<div id="content">
+	<g:layoutBody />
+</div>
 
 </body>
 </html>

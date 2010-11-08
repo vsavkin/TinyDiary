@@ -3,5 +3,5 @@
 	<title>Your Diary</title>
 </head>
 <body>
-	<h1>Main</h1>
+	<h1>What is TinyDiary?</h1>
 </body>

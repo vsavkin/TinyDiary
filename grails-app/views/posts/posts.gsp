@@ -3,17 +3,20 @@
 	<title>Your Diary</title>
 </head>
 <body>
-	<h1><g:link controller="post" action="create">Create New Post</g:link></h1>
-	<h1>Your Posts:</h1>
+	<h1>Your Posts</h1>
 	
-	<div>
-		<g:link action="index">10 Latest</g:link>
-		Or
-		<g:form action="between">
-			From <g:datePicker name="from" value="${from}" precision="day"/>
-			To <g:datePicker name="to" value="${to}" precision="day"/>
-			<g:submitButton name="Submit" value="Find"/>
-		</g:form>
+	<div class="postSelector">
+		<div class="formRow">
+			<g:form action="between">
+				All posts from <g:datePicker name="from" value="${from}" precision="day"/>
+				to <g:datePicker name="to" value="${to}" precision="day"/>
+				<g:submitButton name="Submit" value="Find"/>
+			</g:form>
+		</div>
+		
+		<div class="formRow">
+			or <g:link action="index">10 Latest Posts</g:link>
+		</div>
 	</div>
 	
 	
