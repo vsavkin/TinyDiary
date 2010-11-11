@@ -59,12 +59,12 @@ class TestUtils {
 	}
 	
 	def checkSizeAndReturnList(int size, list){
-		assertEquals size, list.size()
+		list.size() == size
 		list
 	}
 	
 	def checkSizeAndReturnFirst(int size, list){
-		assertEquals size, list.size()
+		list.size() == size
 		list.toList().first()
 	}
 }

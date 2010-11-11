@@ -1,13 +1,12 @@
 package com.savkin
 
 import grails.test.*
+import grails.plugin.spock.*
 import com.savkin.parser.*
 
 @Mixin([TestUtils, ControllerTestUtils])
-class PostControllerTests extends ControllerUnitTestCase {
-	protected void setUp() {
-		super.setUp()
-		
+class PostControllerSpec extends ControllerSpec {
+	def setup() {
 		mockDomain User
 		mockDomain Post
 		mockDomain PostPart
@@ -15,8 +14,9 @@ class PostControllerTests extends ControllerUnitTestCase {
 		mockCommandObject SavePostCommand
 	}
 	
-	void testShouldShowPost() {	
-		def post = new Post()
+	def 'should render view with specified post'() {	
+		setup:
+		def post = Mock(Post)
 		mockStatic(Post){
 			get(1..1){id->
 				assert 100 == id
@@ -24,16 +24,23 @@ class PostControllerTests extends ControllerUnitTestCase {
 			}
 		}
 		
+		when:
 		def model = makeRequest('show', id: 100)
-		assertEquals post, model.post 
+		
+		then:
+		model.post == post
 	}
 	
-	void testShouldShowCreateForm() {
+	def 'should show create form'() {
+		when:
 		makeRequest 'create'
-		assertTrue renderArgs.isEmpty()
+		
+		then:
+		renderArgs.isEmpty()
 	}
 	
-	void testShouldShowEditForm() {
+	def 'should show edit form'() {
+		setup:
 		def post = new Post()
 		mockStatic(Post){
 			get(1..1){id->
@@ -42,45 +49,16 @@ class PostControllerTests extends ControllerUnitTestCase {
 			}
 		}
 		
+		when:
 		def model = makeRequest('edit', id: 100)
-		assertTrue renderArgs.isEmpty()
-		assertEquals post, model.post
+		
+		then:
+		renderArgs.isEmpty()
+		model.post == post
 	}
 	
-	void testShouldSaveNewPost(){
-		def user = asCurrentUser(createUser())
-		
-		mock(PostParser){
-			parse(1..10){
-				[[type: 'work', text: 'work text'],
-				 [type: 'home', text: 'home text']]
-			}
-		}
-		makePostRequest 'save', new SavePostCommand(text: 'some text')
-		assertEquals 'show', redirectArgs.action
-		
-		def post = checkSizeAndReturnFirst(1, user.posts)
-		def (work, home) = checkSizeAndReturnList(2, post.parts)
-		
-		assertEquals 'work', work.type.toString()
-		assertEquals 'work text', work.text
-		assertEquals 'home', home.type.toString()
-		assertEquals 'home text', home.text
-		assertFlash 'Created'
-	}
-	
-	void testShouldShowErrorMessageIfYouSaveEmptyPost(){
-		def command = new SavePostCommand(text: '')
-		def model = makePostRequest('save', command)
-		
-		assertEquals 'create', renderArgs.view
-		assertEquals command, model.post
-		assertTrue command.hasErrors()
-	}
-	
-	void testShouldIgnoreExistingPostPartTypes(){
-		mockDomain PostPartType, [new PostPartType(name: 'work')]		
-		
+	def 'should save new post'(){
+		setup:
 		def user = asCurrentUser(createUser())		
 		mock(PostParser){
 			parse(1..10){
@@ -88,44 +66,98 @@ class PostControllerTests extends ControllerUnitTestCase {
 				 [type: 'home', text: 'home text']]
 			}
 		}
+		
+		when:
 		makePostRequest 'save', new SavePostCommand(text: 'some text')
 		
-		assertEquals 'show', redirectArgs.action
-		assertEquals 2, PostPartType.count()
-		assertNotNull PostPartType.findByName('work')
-		assertNotNull PostPartType.findByName('home')
+		then:
+		assertFlash 'Created'
+		redirectArgs.action == 'show'		
+		def post = checkSizeAndReturnFirst(1, user.posts)
+		def (work, home) = checkSizeAndReturnList(2, post.parts)
+		
+		work.type.toString() == 'work'
+		work.text == 'work text'
+		home.type.toString() == 'home'
+		home.text == 'home text'
 	}
 	
-	void testShouldShowErrorMessageIfUpdateEmptyPost(){
+	def 'show show error message if saving empty post'(){
+		setup:
 		def command = new SavePostCommand(text: '')
+		
+		when:
+		def model = makePostRequest('save', command)
+		
+		then:
+		renderArgs.view == 'create'
+		model.post == command
+		command.hasErrors()
+	}
+	
+	def 'should ignore existing post part types'(){
+		setup:
+		mockDomain PostPartType, [new PostPartType(name: 'work')]		
+		def user = asCurrentUser(createUser())		
+		mock(PostParser){
+			parse(1..10){
+				[[type: 'work', text: 'work text'],
+				 [type: 'home', text: 'home text']]
+			}
+		}
+		
+		when:
+		makePostRequest 'save', new SavePostCommand(text: 'some text')
+		
+		then:
+		redirectArgs.action == 'show'
+		PostPartType.count() == 2
+		PostPartType.findByName('work') != null
+		PostPartType.findByName('home') != null
+	}
+	
+	def 'should show error message if update empty post'(){
+		setup:
+		def command = new SavePostCommand(text: '')
+		
+		when:
 		def model = makePostRequest('update', command)
 		
-		assertEquals 'edit', renderArgs.view
-		assertEquals command, model.post
-		assertTrue command.hasErrors()
+		then:
+		renderArgs.view == 'edit'
+		model.post == command
+		command.hasErrors()
 	}
 	
-	void testShouldUpdateExistingPost(){
+	def 'should update existing post'(){
+		setup: 'create new user'
 		def user = asCurrentUser(createUser())
-		
+
+		and: 'create post part type'
 		def postType = new PostPartType(name: 'work')
 		mockDomain PostPartType, [postType]
 		
+		and: 'create post for our user'
 		def post = new Post(user: user)
 		mockDomain Post, [post]
 		
+		and: 'andd post parts to our post'
 		mockDomain PostPart, [new PostPart(post: post, type: postType, text: 'text')]
 		
+		and: 'mocking our parser'
 		mock(PostParser){
 			parse(1..10){[[type: 'home', text: 'home text']]}
 		}
+		
+		when:
 		makePostRequest 'update', new SavePostCommand(id: post.id, text: 'some text')
 		
-		assertEquals 'show', redirectArgs.action
+		then:
+		redirectArgs.action == 'show'
 		
 		def updatedPost = checkSizeAndReturnFirst(1, Post.list())
 		def updatedPostPart = checkSizeAndReturnFirst(1, updatedPost.parts)
-		assertEquals 'home', updatedPostPart.type.toString()
-		assertEquals 'home text', updatedPostPart.text
+		updatedPostPart.type.toString() == 'home'
+		updatedPostPart.text == 'home text'
 	}
 }

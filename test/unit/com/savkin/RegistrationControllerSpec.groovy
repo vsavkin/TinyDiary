@@ -1,47 +1,61 @@
 package com.savkin
 
 import grails.test.*
+import grails.plugin.spock.*
 
 @Mixin([TestUtils, ControllerTestUtils])
-class RegistrationControllerTests extends ControllerUnitTestCase {
-	protected void setUp(){
-		super.setUp()
+class RegistrationControllerSpec extends ControllerSpec {
+	def setup(){
 		mockDomain User
 		mockCommandObject UserRegistrationCommand
 	}
 	
-	void testShouldReturnViewForGetRequest(){
+	def 'should return view for get request'(){
+		when:
 		makeRequest 'index'
-		assertTrue controller.renderArgs.isEmpty()
+		
+		then:
+		controller.renderArgs.isEmpty()
 	}
 	
-    void testShouldShowErrorMessageForDifferentPasswords() {
+    def 'should show error message for different passwords'() {
+		setup:
 		def urc = new UserRegistrationCommand(username: 'victor', 
 			password: 'password', passwordRepeat: 'password1')
 		
+		when:
 		def model = makePostRequest('index', urc)
-		assertTrue model.urc?.hasErrors()	
-		assertTrue controller.renderArgs.isEmpty()
+		
+		then:
+		model.urc?.hasErrors()	
+		controller.renderArgs.isEmpty()
     }
 	
-	void testShouldShowErrorMessageIfNameIsNotUnique() {
+	def 'should show error message if name is not unique'() {
+		setup:
 		new User(username: 'victor', password: 'password').save()
-
 		def urc = new UserRegistrationCommand(username: 'victor',
 			password: 'password', passwordRepeat: 'password')
 		
+		when:
 		def model = makePostRequest('index', urc)
-		assertTrue model.urc?.hasErrors()
-		assertTrue controller.renderArgs.isEmpty()
+		
+		then:
+		model.urc?.hasErrors()
+		controller.renderArgs.isEmpty()
 	}
 	
-	void testShouldCreateNewUserAndRedirectToMainPage() {
+	def 'should create new user and redirect to main page'() {
+		setup:
 		def urc = new UserRegistrationCommand(username: 'victor',
 			password: 'password', passwordRepeat: 'password')
 		
+		when:
 		def model = makePostRequest('index', urc)
-		assertEquals 'main', controller.redirectArgs['controller']
+		
+		then:
+		controller.redirectArgs == [controller: 'main']
 		assertFlash 'Welcome'
-		assertNotNull User.findByUsername('victor')
+		User.findByUsername('victor') != null
 	}
 }
