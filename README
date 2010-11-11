@@ -3,11 +3,7 @@ TinyDiary is a very small Grails project that will help you to keep track of you
 TODO:
 1. Add a filter checking owner of a post------
 2. Create a slick textarea for editing posts
-3. Write a simple CSS for the application
-4. Redesign the main page
-5. Redesign the posts page
-6. Redesign the show post page
-7. Redesign the create post page
-8. Redesign the edit post page
-9. Add a full text search
-
+3. Redesign the create post page
+4. Redesign the edit post page
+5. Add a full text search
+6. Add autoresize textarea
