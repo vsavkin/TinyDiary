@@ -1,9 +1,13 @@
 package com.savkin
 
 class RegistrationController {		
+	AuthService authService
+	
     def index = {UserRegistrationCommand urc ->	
 		if(request.method == "POST"){
 			def user = new User(urc.properties)
+			user.password = authService.encodePassword(urc.password)
+			
 			if(urc.hasErrors()){
 				[urc: urc]
 			}else if (!user.save()){

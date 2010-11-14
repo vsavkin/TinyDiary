@@ -10,4 +10,8 @@ class AuthService {
 	def isLoggedIn(){
 		springSecurityService.isLoggedIn() 
 	}
+	
+	def encodePassword(String password){
+		springSecurityService.encodePassword(password)
+	}
 }

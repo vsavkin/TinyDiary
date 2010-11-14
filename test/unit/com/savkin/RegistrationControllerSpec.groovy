@@ -22,6 +22,7 @@ class RegistrationControllerSpec extends ControllerSpec {
 		setup:
 		def urc = new UserRegistrationCommand(username: 'victor', 
 			password: 'password', passwordRepeat: 'password1')
+		controller.authService = Mock(AuthService)
 		
 		when:
 		def model = makePostRequest('index', urc)
@@ -36,6 +37,7 @@ class RegistrationControllerSpec extends ControllerSpec {
 		new User(username: 'victor', password: 'password').save()
 		def urc = new UserRegistrationCommand(username: 'victor',
 			password: 'password', passwordRepeat: 'password')
+		controller.authService = Mock(AuthService)
 		
 		when:
 		def model = makePostRequest('index', urc)
@@ -45,17 +47,23 @@ class RegistrationControllerSpec extends ControllerSpec {
 		controller.renderArgs.isEmpty()
 	}
 	
-	def 'should create new user and redirect to main page'() {
+	def 'should create new enabled user and redirect to main page'() {
 		setup:
 		def urc = new UserRegistrationCommand(username: 'victor',
 			password: 'password', passwordRepeat: 'password')
+		controller.authService = Mock(AuthService)
 		
 		when:
 		def model = makePostRequest('index', urc)
 		
 		then:
+		1 * controller.authService.encodePassword('password') >> 'encoded_password'
 		controller.redirectArgs == [controller: 'main']
 		assertFlash 'Welcome'
-		User.findByUsername('victor') != null
+		
+		def user = User.findByUsername('victor')
+		user != null
+		user.enabled == true
+		user.password == 'encoded_password'
 	}
 }
