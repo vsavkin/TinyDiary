@@ -32,7 +32,6 @@ class BootStrap {
 			
 			user.addToPosts post
 			user.save(flush: true)
-			println post.id
 		}
 	}
 	

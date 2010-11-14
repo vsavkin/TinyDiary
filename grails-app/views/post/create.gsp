@@ -10,7 +10,7 @@
 	</g:hasErrors>
 			
 	<g:form action="save">
-		<g:textArea name="text" value="${post?.text}"/>
+		<diary:autoresizedTextArea name="text"/>
 		<g:submitButton name="submit" value="Create!"/>
 	</g:form>
 </body>
