@@ -39,4 +39,22 @@ class DomainIntegrationSpec extends IntegrationSpec  {
 		Post.count() == 0
 		PostPartType.count() == 1
 	}
+	
+	def 'should delete all post parts'(){
+		setup: 'create post part type'
+		def postPartType = new PostPartType(name:"work").save()
+		def user = new User(username: 'John', password: 'password', enabled: true).save()
+
+		and: 'create post'
+		def post = new Post(user: user)
+		def postPart = new PostPart(text: 'text', type: postPartType)
+		post.addToParts(postPart)
+		
+		when: 'change post parts'
+		post.deleteAllParts()
+		
+		then:
+		post.parts.isEmpty()
+		PostPart.countByPost(post) == 0
+	}
 }

@@ -16,4 +16,11 @@ class Post {
 			"!${it.type.toString()}\n${it.text}"
 		}.join("\n")
 	}
+	
+	def deleteAllParts(){
+		def clonedParts = parts.collect{it}
+		clonedParts.each{
+			removeFromParts it
+		}
+	}
 }
