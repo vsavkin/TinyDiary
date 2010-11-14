@@ -41,8 +41,7 @@ class PostController {
 			saveTypes epc.types
 			
 			def post = Post.get(epc.id)
-			post.deleteAllParts()
-			epc.postParts.each {post.addToParts it}
+			post.updateContent epc.postParts
 			post.save()
 
 			flash.message = 'Post Successfuly Updated!'

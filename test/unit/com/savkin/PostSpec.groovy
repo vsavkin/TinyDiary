@@ -15,6 +15,6 @@ class PostSpec extends UnitSpec {
 		post.addToParts new PostPart(post: post, type: type2, text: 'text2')
 		
 		then:
-		post.text == "!type1\ntext1\n!type2\ntext2"
+		post.text == "!type1\ntext1\n\n!type2\ntext2"
 	}
 }

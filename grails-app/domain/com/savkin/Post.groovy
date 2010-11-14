@@ -11,13 +11,24 @@ class Post {
     static constraints = {
     }
 	
+	static mapping = {
+		parts cascade: "all-delete-orphan"
+	}
+	
 	def getText(){
 		parts.collect{
 			"!${it.type.toString()}\n${it.text}"
-		}.join("\n")
+		}.join("\n\n")
 	}
 	
-	def deleteAllParts(){
+	def updateContent(List postParts){
+		deleteAllParts()
+		postParts.each {
+			addToParts it
+		}
+	}
+	
+	private deleteAllParts(){
 		def clonedParts = parts.collect{it}
 		clonedParts.each{
 			removeFromParts it
