@@ -8,8 +8,8 @@
 	<div class="postSelector">
 		<div class="formRow">
 			<g:form action="between">
-				All posts from <g:datePicker name="from" value="${from}" precision="day"/>
-				to <g:datePicker name="to" value="${to}" precision="day"/>
+				All posts from <g:datePicker name="from1" value="${from}" precision="day"/>
+				to <g:datePicker name="to1" value="${to}" precision="day"/>
 				<g:submitButton name="Submit" value="Find"/>
 			</g:form>
 		</div>

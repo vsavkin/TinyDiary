@@ -41,7 +41,7 @@ class PostController {
 			saveTypes epc.types
 			
 			def post = Post.get(epc.id)
-			post.parts.each {post.removeFromParts it}
+			post.deleteAllParts()
 			epc.postParts.each {post.addToParts it}
 			post.save()
 
@@ -65,6 +65,7 @@ class PostController {
 
 class SavePostCommand {
 	long id
+	Date dateCreated
 	String text
 	
 	def getTypes(){

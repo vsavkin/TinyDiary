@@ -47,6 +47,8 @@ grails.enable.native2ascii = true
 grails.logging.jul.usebridge = true
 // packages to include in Spring bean scanning
 grails.spring.bean.packages = []
+//enable jquery
+grails.views.javascript.library="jquery"
 
 // set per-environment serverURL stem for creating absolute links
 environments {
@@ -98,4 +100,4 @@ grails {
 		}
 	}
 }
-
+jquery.plugins.autoresize=autoresize.jquery.min.js
