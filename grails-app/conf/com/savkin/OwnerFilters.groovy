@@ -8,7 +8,7 @@ class OwnerFilters {
             before = {
                 def user = authService.currentUser()
 				def post = Post.get(params.id)
-				if(post.user != user){
+				if(!post || post.user != user){
 					redirect controller: 'main'	
 					return false
 				}
