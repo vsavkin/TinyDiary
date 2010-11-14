@@ -66,13 +66,14 @@ class SavePostCommand {
 	long id
 	Date dateCreated
 	String text
+	PostParser parser = new PostParser()
 	
 	def getTypes(){
-		PostParser.parseText(text).type
+		parser.parse(text).type
 	}
 	
 	def getPostParts(){
-		def result = PostParser.parseText(text)
+		def result = parser.parse(text)
 		result.collect{
 			def type = PostPartType.findByName(it.type)
 			new PostPart(type: type, text: it.text)

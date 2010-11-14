@@ -3,10 +3,6 @@ package com.savkin.parser
 class PostParser {
 	static final DEFAULT_TYPE = '~~ DEFAULT_TYPE ~~'
 	
-	static parseText(String text){
-		new PostParser().parse(text)
-	}
-	
 	def parse(String text){
 		def result = [[type: DEFAULT_TYPE, textLines: []]]
 		

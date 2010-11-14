@@ -60,17 +60,15 @@ class PostControllerSpec extends ControllerSpec {
 	def 'should save new post'(){
 		setup:
 		def user = asCurrentUser(createUser())		
-		mock(PostParser){
-			parse(1..10){
-				[[type: 'work', text: 'work text'],
-				 [type: 'home', text: 'home text']]
-			}
-		}
-		
+		def command = new SavePostCommand(text: 'some text', parser: Mock(PostParser))
+
 		when:
-		makePostRequest 'save', new SavePostCommand(text: 'some text')
+		makePostRequest 'save', command
 		
 		then:
+		command.parser.parse('some text') >> 
+			[[type: 'work', text: 'work text'], [type: 'home', text: 'home text']]
+			
 		assertFlash 'Created'
 		redirectArgs.action == 'show'		
 		def post = checkSizeAndReturnFirst(1, user.posts)
@@ -99,17 +97,14 @@ class PostControllerSpec extends ControllerSpec {
 		setup:
 		mockDomain PostPartType, [new PostPartType(name: 'work')]		
 		def user = asCurrentUser(createUser())		
-		mock(PostParser){
-			parse(1..10){
-				[[type: 'work', text: 'work text'],
-				 [type: 'home', text: 'home text']]
-			}
-		}
+		def command = new SavePostCommand(text: 'some text', parser: Mock(PostParser))
 		
 		when:
-		makePostRequest 'save', new SavePostCommand(text: 'some text')
+		makePostRequest 'save', command
 		
 		then:
+		command.parser.parse('some text') >>
+			[[type: 'work', text: 'work text'], [type: 'home', text: 'home text']]
 		redirectArgs.action == 'show'
 		PostPartType.count() == 2
 		PostPartType.findByName('work') != null
@@ -141,18 +136,17 @@ class PostControllerSpec extends ControllerSpec {
 		def post = new Post(user: user)
 		mockDomain Post, [post]
 		
-		and: 'andd post parts to our post'
+		and: 'add post parts to our post'
 		mockDomain PostPart, [new PostPart(post: post, type: postType, text: 'text')]
 		
-		and: 'mocking our parser'
-		mock(PostParser){
-			parse(1..10){[[type: 'home', text: 'home text']]}
-		}
+		and: 'creating command'
+		def command = new SavePostCommand(id: post.id, text: 'some text', parser: Mock(PostParser))
 		
 		when:
-		makePostRequest 'update', new SavePostCommand(id: post.id, text: 'some text')
+		makePostRequest 'update', command
 		
 		then:
+		command.parser.parse('some text') >> [[type: 'home', text: 'home text']]
 		redirectArgs.action == 'show'
 		
 		def updatedPost = checkSizeAndReturnFirst(1, Post.list())
