@@ -4,10 +4,10 @@ import groovy.mock.interceptor.*
 
 
 class ControllerTestUtils {
-	def asCurrentUser(user){
+	User asCurrentUser(user){
 		def stub = new StubFor(AuthService)
-		stub.demand.isLoggedIn{user}
-		stub.demand.currentUser{user}
+		stub.demand.isLoggedIn(0..100){user}
+		stub.demand.currentUser(0..100){user}
 		controller.authService = stub.proxyInstance()
 		user
 	}

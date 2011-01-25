@@ -4,11 +4,10 @@ class OwnerFilters {
 	AuthService authService
 	
     def filters = {
-        all(controller:'post', action:'show|save|update') {
+        all(controller:'post', action:'show|edit|update') {
             before = {
                 def user = authService.currentUser()
-				def post = Post.get(params.id)
-				if(!post || post.user != user){
+				if(!user.postById(params.id.toLong())){
 					redirect controller: 'main'	
 					return false
 				}

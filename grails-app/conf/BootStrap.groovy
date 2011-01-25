@@ -11,7 +11,9 @@ class BootStrap {
 			def user = new User(username: 'avix1000', password: 
 				springSecurityService.encodePassword('password'), enabled: true)
 			user.save()
-			
+
+			springSecurityService.reauthenticate user.username
+
 			def work = new PostPartType(name: 'work').save()
 			def home = new PostPartType(name: 'home').save()
 			

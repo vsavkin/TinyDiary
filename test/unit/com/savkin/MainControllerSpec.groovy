@@ -17,7 +17,7 @@ class MainControllerSpec extends ControllerSpec {
 	
     def 'should redirect registered users to PostsController'() {
 		when:
-		asCurrentUser 'user'
+		asCurrentUser new User()
 		makeRequest 'index'
 		
 		then:

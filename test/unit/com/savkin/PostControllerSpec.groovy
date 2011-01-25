@@ -16,21 +16,86 @@ class PostControllerSpec extends ControllerSpec {
 	
 	def 'should render view with specified post'() {	
 		setup:
-		def post = Mock(Post)
-		mockStatic(Post){
-			get(1..1){id->
-				assert 100 == id
-				post	
-			}
-		}
+		def user = asCurrentUser(Mock(User))
 		
 		when:
-		def model = makeRequest('show', id: 100)
+		def model = makeRequest('show', id: POSTID)
 		
 		then:
-		model.post == post
+		user.postById(POSTID) >> POST
+		model.post == POST
+
+		where:
+		POSTID = 100
+		POST = new Post()
 	}
-	
+
+	def 'should return if post has next and prev posts'() {
+		setup:
+		def user = asCurrentUser(Mock(User))
+
+		when:
+		def model = makeRequest('show', id: POSTID)
+
+		then:
+		user.postById(POSTID) >> POST
+		user.nextPost(POSTID) >> ANOTHER_POST
+		user.prevPost(POSTID) >> ANOTHER_POST
+		model.post == POST
+		model.hasNext
+		model.hasPrev
+
+		when:
+		model = makeRequest('show', id: POSTID)
+
+		then:
+		user.postById(POSTID) >> POST
+		user.nextPost(POSTID) >> null
+		user.prevPost(POSTID) >> null
+		model.post == POST
+		!model.hasNext
+		!model.hasPrev
+
+		where:
+		POSTID = 100
+		POST = new Post(id: POSTID)
+		ANOTHER_POST = new Post(id: 2)
+	}
+
+	def 'should render view with the next post'() {
+		setup:
+		def user = asCurrentUser(Mock(User))
+
+		when:
+		def model = makeRequest('nextPost', id: POSTID)
+
+		then:
+		user.nextPost(POSTID) >> POST
+		model.post == POST
+		renderArgs.view == 'show'
+
+		where:
+		POSTID = 100
+		POST = new Post()
+	}
+
+	def 'should render view with the previous post'() {
+		setup:
+		def user = asCurrentUser(Mock(User))
+
+		when:
+		def model = makeRequest('prevPost', id: POSTID)
+
+		then:
+		user.prevPost(POSTID) >> POST
+		model.post == POST
+		renderArgs.view == 'show'
+
+		where:
+		POSTID = 100
+		POST = new Post()
+	}
+
 	def 'should show create form'() {
 		when:
 		makeRequest 'create'
@@ -41,39 +106,38 @@ class PostControllerSpec extends ControllerSpec {
 	
 	def 'should show edit form'() {
 		setup:
-		def post = new Post()
-		mockStatic(Post){
-			get(1..1){id->
-				assert 100 == id
-				post
-			}
-		}
-		
+		def user = asCurrentUser(Mock(User))
+
 		when:
 		def model = makeRequest('edit', id: 100)
 		
 		then:
+		user.postById(POSTID) >> POST
 		renderArgs.isEmpty()
-		model.post == post
+		model.post == POST
+
+		where:
+		POSTID = 100
+		POST = new Post()		
 	}
 	
 	def 'should save new post'(){
 		setup:
-		def user = asCurrentUser(createUser())		
+		def user = asCurrentUser(createUser())
 		def command = new SavePostCommand(text: 'some text', parser: Mock(PostParser))
 
 		when:
 		makePostRequest 'save', command
 		
 		then:
-		command.parser.parse('some text') >> 
+		command.parser.parse('some text') >>
 			[[type: 'work', text: 'work text'], [type: 'home', text: 'home text']]
-			
+
 		assertFlash 'Created'
-		redirectArgs.action == 'show'		
+		redirectArgs.action == 'show'
 		def post = checkSizeAndReturnFirst(1, user.posts)
 		def (work, home) = checkSizeAndReturnList(2, post.parts)
-		
+
 		work.type.toString() == 'work'
 		work.text == 'work text'
 		home.type.toString() == 'home'

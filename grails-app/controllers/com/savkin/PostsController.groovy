@@ -6,10 +6,11 @@ class PostsController {
 	AuthService authService
 	User user
 	List posts
+	List types
 	Date from
 	Date to
 	
-	def index = { 
+	def index = {
 		user = authService.currentUser()
 		posts = user.lastPosts(10)
 		render view: 'posts'

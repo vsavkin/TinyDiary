@@ -8,7 +8,18 @@ class PostController {
 	AuthService authService
 	
 	def show = {
-		[post: Post.get(params.id)]
+		def post = authService.currentUser().postById(params.id.toLong())
+		modelForShowing post
+	}
+
+	def prevPost = {
+		def post = authService.currentUser().prevPost(params.id.toLong())
+		render view: 'show', model: [post: post]
+	}
+
+	def nextPost = {
+		def post = authService.currentUser().nextPost(params.id.toLong())
+		render view: 'show', model: [post: post]
 	}
 	
 	def create = {
@@ -19,7 +30,7 @@ class PostController {
 			render view: 'create', model: [post: epc]
 		}else{
 			saveTypes epc.types
-			
+
 			def user = authService.currentUser()
 			def post = newPost(epc.postParts)
 			user.addToPosts post
@@ -31,7 +42,7 @@ class PostController {
 	}
 	
 	def edit = {
-		[post: Post.get(params.id)]
+		[post: authService.currentUser().postById(params.id.toLong())]
 	}
 	
 	def update = {SavePostCommand epc->
@@ -47,6 +58,13 @@ class PostController {
 			flash.message = 'Post Successfuly Updated!'
 			redirect action: 'show', id: post.id
 		}
+	}
+
+	private modelForShowing(post){
+		def user = authService.currentUser()
+		def hasNext = user.nextPost(post.id) != null
+		def hasPrev = user.prevPost(post.id) != null
+		[post: post, hasNext: hasNext, hasPrev: hasPrev]
 	}
 	
 	private newPost(postParts){

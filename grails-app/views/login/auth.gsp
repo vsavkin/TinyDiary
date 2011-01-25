@@ -26,7 +26,7 @@
 		id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if> />
 	</div>
 	
-	<div class="formRow">
+	<div class="formRowButton">
 		<input type='submit' value='Login' />
 	</div>
 </form>

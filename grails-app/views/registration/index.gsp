@@ -19,7 +19,7 @@
 		<div class="formRow">
 			<label for="passwordRepeat">Password Repeat</label>  <g:passwordField name="passwordRepeat" id="passwordRepeat"/>
 		</div>
-		<div class="formRow">
+		<div class="formRowButton">
 			<g:submitButton name="Submit" value="Register!"/>
 		</div>
 	</g:form>

@@ -11,6 +11,9 @@
 			
 	<g:form action="save">
 		<diary:autoresizedTextArea name="text"/>
-		<g:submitButton name="submit" value="Create!"/>
+
+		<div class="formRowButton">
+			<g:submitButton name="submit" value="Create!"/>
+		</div>
 	</g:form>
 </body>

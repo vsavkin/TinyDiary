@@ -1,5 +1,5 @@
-TinyDiary is a very small Grails project that will help you to keep track of your productive and unproductive days. It allows you to write a diary record and mark your days from 1 to 5. 
+TinyDiary is a very small Grails project that can help you to keep track of your productive and unproductive days. It allows you to write a diary record and measure your day productivity.
 
 TODO:
 1. Add a full text search
-2. Deafult postPartType
+2. Default postPartType

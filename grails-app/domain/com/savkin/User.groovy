@@ -31,4 +31,23 @@ class User {
 	Set<Role> getAuthorities() {
 		UserRole.findAllByUser(this).collect { it.role } as Set
 	}
+
+	def postById(long id){
+		def post = Post.get(id)
+		post?.user == this ? post : null
+	}
+
+	def prevPost(long id){
+		def post = postById(id)
+		if (post != null) {
+			Post.findByUserAndDateCreatedLessThan(this, post.dateCreated, [sort: 'dateCreated', order: 'desc'])
+		}
+	}
+
+	def nextPost(long id){
+		def post = postById(id)
+		if (post != null) {
+			Post.findByUserAndDateCreatedGreaterThan(this, post.dateCreated, [sort: 'dateCreated', order: 'asc'])
+		}
+	}
 }

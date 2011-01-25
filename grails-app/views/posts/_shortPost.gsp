@@ -9,7 +9,7 @@
 		<g:each var="part" in="${post.parts}">
 			<div class="postPart">
 				<div class="type">${part.type}</div>
-				<div class="text">${part.text}</div>
+				<div class="text">${part.textAsHtml}</div>
 			</div>
 		</g:each>
 	</g:if>

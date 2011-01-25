@@ -8,7 +8,7 @@ html * {
 
 body {
     background: #fff;
-    padding: 15px;
+    padding: 15px 0px;
     color: #333;
     font: 17px ‘Trebuchet MS’, Helvetica, sans-serif;
 }
@@ -44,14 +44,23 @@ body {
     text-align: center;
 }
 
+a.buttonLike {
+    margin: 2px 0;
+    padding: 2px 4px;
+	font-size: 15px;
+	background-color: #fcfcfc;
+    border: 1px solid #ccc;
+	display: inline-block;
+}
+
 a {
 	padding: 3px;
+	font-size: 15px;
 	border: 1px solid #ccc;
 }
 
 a:link, a:visited, a:hover {
-    color: #666;
-    font-weight: bold;
+    color: #000;
     text-decoration: none;
 }
 
@@ -73,7 +82,7 @@ input, select, textarea {
     border: 1px solid #ccc;
     margin: 2px 0;
     padding: 2px 4px;
-    font: 17px ‘Trebuchet MS’, Helvetica, sans-serif;
+	font-size: 15px;
 }
 
 select {
@@ -109,15 +118,20 @@ input:focus, select:focus, textarea:focus {
 	font-weight: bold;	
 }
 
+.formRowButton {
+	margin-top: 10px;
+	padding: 5px 0px;
+	border-top: 1px solid #48802c;
+}
+
 /* POSTS */
 .postSelector{
 	margin: 20px 0px;
-	font-size: 12px;	
 }
 
-.postSelector select, input{
-	font-size: 12px;	
-}
+/*.postSelector select, input{*/
+	/*font-size: 12px;	*/
+/*}*/
 
 .shortPost{
 	padding: 15px 0px;	
@@ -143,7 +157,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .postPart .text {
-	
+	padding-left: 20px;
 }
 
 /* MESSAGES AND ERRORS */
@@ -174,7 +188,6 @@ div.errors li {
 
 
 /* PAGINATION */
-
 .paginateButtons {
     background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
     border: 1px solid #ccc;

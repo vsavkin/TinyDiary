@@ -13,6 +13,9 @@
 		<g:hiddenField name="id" value="${post.id}"/>
 		<g:hiddenField name="dateCreated" value="${post.dateCreated}"/>
 		<diary:autoresizedTextArea name="text" value="${post?.text}"/>
-		<g:submitButton name="submit" value="Save"/>
+
+		<div class="formRowButton">
+			<g:submitButton name="submit" value="Save"/>
+		</div>
 	</g:form>
 </body>
