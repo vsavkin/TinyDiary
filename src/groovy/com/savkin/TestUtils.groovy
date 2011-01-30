@@ -21,6 +21,15 @@ class TestUtils {
 	def bunchOfPosts(){
 		(1..5).collect{new Post()}
 	}
+
+	def createPostFromParts(Map parts){
+		def p = new Post()
+		parts.each {typeName, text->
+			def type = PostPartType.findByName(typeName)
+			p.addToParts new PostPart(type: type, text: text)
+		}
+		p
+	}
 	
 	def mock(Class clazz, Closure s){
 		def mock = mockFor(clazz, true)

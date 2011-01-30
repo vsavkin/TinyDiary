@@ -22,7 +22,13 @@ class BootStrap {
 			post.addToParts new PostPart(type: home, text: 'Sitting at home')
 			
 			user.addToPosts post
-			user.save()		
+
+			post = new Post()
+			post.addToParts new PostPart(type: work, text: 'Sitting at work2')
+			post.addToParts new PostPart(type: home, text: 'Sitting at home2')
+
+			user.addToPosts post
+			user.save()
 
 			user = new User(username: 'john', password:
 				springSecurityService.encodePassword('password'), enabled: true)

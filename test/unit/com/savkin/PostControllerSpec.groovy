@@ -71,12 +71,13 @@ class PostControllerSpec extends ControllerSpec {
 
 		then:
 		user.nextPost(POSTID) >> POST
-		model.post == POST
-		renderArgs.view == 'show'
+		redirectArgs.action == 'show'
+		redirectArgs.id == NEXTPOSTID
 
 		where:
 		POSTID = 100
-		POST = new Post()
+		NEXTPOSTID = 101
+		POST = new Post(id: NEXTPOSTID)
 	}
 
 	def 'should render view with the previous post'() {
@@ -88,12 +89,13 @@ class PostControllerSpec extends ControllerSpec {
 
 		then:
 		user.prevPost(POSTID) >> POST
-		model.post == POST
-		renderArgs.view == 'show'
+		redirectArgs.action == 'show'
+		redirectArgs.id == PREVPOSTID
 
 		where:
 		POSTID = 100
-		POST = new Post()
+		PREVPOSTID = 99
+		POST = new Post(id: PREVPOSTID)
 	}
 
 	def 'should show create form'() {

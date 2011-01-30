@@ -34,4 +34,8 @@ class Post {
 			removeFromParts it
 		}
 	}
+
+	def hasPartType(PostPartType type){
+		parts.find {it.type == type}
+	}
 }

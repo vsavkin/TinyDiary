@@ -8,18 +8,21 @@ class PostController {
 	AuthService authService
 	
 	def show = {
-		def post = authService.currentUser().postById(params.id.toLong())
-		modelForShowing post
+		def user = authService.currentUser()
+		def post = user.postById(params.id.toLong())
+		def hasNext = user.nextPost(post.id) != null
+		def hasPrev = user.prevPost(post.id) != null
+		render view: 'show', model: [post: post, hasNext: hasNext, hasPrev: hasPrev]
 	}
 
 	def prevPost = {
 		def post = authService.currentUser().prevPost(params.id.toLong())
-		render view: 'show', model: [post: post]
+		redirect action: 'show', id: post.id
 	}
 
 	def nextPost = {
 		def post = authService.currentUser().nextPost(params.id.toLong())
-		render view: 'show', model: [post: post]
+		redirect action: 'show', id: post.id
 	}
 	
 	def create = {
@@ -58,13 +61,6 @@ class PostController {
 			flash.message = 'Post Successfuly Updated!'
 			redirect action: 'show', id: post.id
 		}
-	}
-
-	private modelForShowing(post){
-		def user = authService.currentUser()
-		def hasNext = user.nextPost(post.id) != null
-		def hasPrev = user.prevPost(post.id) != null
-		[post: post, hasNext: hasNext, hasPrev: hasPrev]
 	}
 	
 	private newPost(postParts){

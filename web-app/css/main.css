@@ -129,23 +129,37 @@ input:focus, select:focus, textarea:focus {
 	margin: 20px 0px;
 }
 
-/*.postSelector select, input{*/
-	/*font-size: 12px;	*/
-/*}*/
+.typesBlock {
+	text-align:right;
+	margin-bottom: 5px;
+}
 
+.typesBlock a {
+	margin: 0px;
+	padding: 0px 2px;
+	background-color: #D6ECCB;
+}
+
+/* SHORT POST */
 .shortPost{
-	padding: 15px 0px;	
+	margin: 0px 0px 10px 0px;
+	border: 1px solid #D6ECCB;
 }
 
 .shortPost .upperLine{
-	padding: 5px;
-	background: #A9D991;
+	padding: 2px;
+	font-size: 12px;
+	background: #D6ECCB;
 }
 
 .shortPost .upperLine a{
-	padding: 5px;
-	background: #A9D991;
-	border: 1px solid white;
+	font-size: 12px;
+	border: 0px;
+	color: #a9a9a9;
+}
+
+.rightButtons {
+	float: right;
 }
 
 .postPart {
@@ -153,7 +167,8 @@ input:focus, select:focus, textarea:focus {
 }
 	
 .postPart .type {
-	background: #D6ECCB;	
+	padding-left:5px;
+	color: #a9a9a9;
 }
 
 .postPart .text {

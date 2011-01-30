@@ -9,5 +9,13 @@ class PostPartType {
 
 	String toString() {
 		name
-	}		
+	}
+
+	static type(String name){
+		new PostPartType(name: name)
+	}
+
+	boolean equals(obj){
+		getClass() == obj.getClass() && name == obj?.name
+	}
 }
