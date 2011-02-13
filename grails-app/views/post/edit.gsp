@@ -2,6 +2,7 @@
 <meta name="layout" content="main"/>
 <title>Edit Post</title>
 </head>
+
 <body>
 	<h1>Create Post on <g:formatDate format="yyyy-MM-dd" date="${post.dateCreated}"/></h1>
 	

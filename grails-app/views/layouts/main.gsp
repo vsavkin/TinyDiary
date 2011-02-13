@@ -2,12 +2,14 @@
 	<head>
 		<title><g:layoutTitle default="TinyDiary" /></title>
 		<link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
+		<link rel="stylesheet" href="${resource(dir:'css/ui-lightness',file:'jquery-ui-1.8.9.custom.css')}" />
 		<link rel="shortcut icon"
 			href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
 		<g:layoutHead />
 		
 		<g:javascript library="application" />		
 		<g:javascript library="jquery" plugin="jquery"/>
+		<g:javascript library="jquery-ui" src="jquery/jquery-ui-1.8.9.custom.min.js"/>
 	</head>
 <body>
 
@@ -27,7 +29,7 @@
 		<g:link controller="registration">Create new account</g:link>	
 	</sec:ifNotLoggedIn>
 </div>
-		
+
 <div id="content">
 	<g:layoutBody />
 </div>

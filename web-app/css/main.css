@@ -33,7 +33,6 @@ body {
   	margin-right: auto ;
 }
 
-
 /* NAVIGATION MENU */
 #nav {
     background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
@@ -173,6 +172,27 @@ input:focus, select:focus, textarea:focus {
 
 .postPart .text {
 	padding-left: 20px;
+}
+
+/* SYNONYMS */
+.synItem {
+	margin: 25px 0px;
+}
+
+.synHeader {
+	margin: 0 0 5 0;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.synExample {
+	margin: 0 0 5 0;
+	font-size: 11px;
+}
+
+.synBody {
+	font-size: 12px;
+	margin: 2 0 2 0;
 }
 
 /* MESSAGES AND ERRORS */
